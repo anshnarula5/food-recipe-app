@@ -1,27 +1,63 @@
 import { Layout, Text } from "@ui-kitten/components";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, ScrollView, StyleSheet } from "react-native";
+import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import FoodCard from "../components/FoodCard";
+import TypeCard from "../components/TypeCard";
+import {fetchBreakfast, fetchDessert, fetchIndian} from "../redux/actions/recipeAction";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const getData = async () => {
-    const res = await axios.get(
-      "https://api.edamam.com/search?q=chicken&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe"
-    );
-    console.log(res.data);
-    setData(res.data.hits);
-  };
+  const {loading : bLoading, breakfast} = useSelector(state => state.breakfast)
+  const {loading : iLoading, indian} = useSelector(state => state.indian)
+  const {loading : dLoading, dessert} = useSelector(state => state.dessert)
+  
+  const dispatch = useDispatch()
   useEffect(() => {
-    getData();
+    dispatch(fetchBreakfast())
+    dispatch(fetchIndian())
+    dispatch(fetchDessert())
   }, []);
   return (
-    <Layout style={styles.container}>
-          {data.length > 0 && data.map(d => (
-          <FoodCard data={d}/>
-      ))}
-    </Layout>
+    <ScrollView style={styles.container}>
+      <Text category={"h1"} style={styles.header}>Food tomorrow because today is almost over.</Text>
+      <TypeCard />
+      <Text category={"h1"} style={styles.header}>Breakfast</Text>
+      <Layout style={styles.hContainer}>
+        {bLoading ? <Text >loading</Text> : (
+          <FlatList
+            horizontal={true}
+            data={breakfast}
+            renderItem={({ item }) => <FoodCard data={item} />}
+            keyExtractor={(item) => item.uri}
+          />
+        )}
+      </Layout>
+      <Text category={"h1"} style={styles.header}>Indian</Text>
+      <Layout style={styles.hContainer}>
+        {iLoading  ? <Text >loading</Text> : (
+          <FlatList
+            horizontal={true}
+            data={indian}
+            renderItem={({ item }) => <FoodCard data={item} />}
+            keyExtractor={(item) => item.uri}
+          />
+        )}
+      </Layout>
+      <Text category={"h1"} style={styles.header}>Dessert</Text>
+      <Layout style={styles.hContainer}>
+        {dLoading  ? <Text >loading</Text> : (
+          <FlatList
+            horizontal={true}
+            data={dessert}
+            renderItem={({ item }) => <FoodCard data={item} />}
+            keyExtractor={(item) => item.uri}
+          />
+        )}
+      </Layout>
+     
+    </ScrollView>
   );
 };
 
@@ -29,15 +65,13 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    paddingHorizontal: 5,
+    paddingHorizontal: 15,
   },
-  container: {
-    flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
-    paddingHorizontal: 5,
+  
+  hContainer: {
+    paddingVertical : 10
+  },
+  header: {
+    paddingVertical : 10
   },
 });

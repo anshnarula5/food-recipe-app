@@ -1,30 +1,26 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { Image, StyleSheet } from "react-native";
+import {pPink, pViolet} from "../constants";
 
-const FoodCard = ({ data }) => {
+const TypeCard = () => {
   return (
-    <Layout style={styles.card} level={"2"}>
-      <Image
-        source={{
-          uri: data.recipe.image,
-        }}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <Text style={styles.text}>{data.recipe.label}</Text>
+    <Layout style={styles.card}>
+      
+      <Text style={styles.text}>Chinese</Text>
       
     </Layout>
   );
 };
 
-export default FoodCard;
+export default TypeCard;
 
 const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     marginRight: 10,
-    width: 180,
+        width: 180,
+    backgroundColor : pPink
   },
   image: {
     justifyContent: "center",
@@ -34,9 +30,10 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     fontSize: 17,
-    fontWeight: "bold",
   },
   sub: {
     paddingTop: 6,
   },
 });
+
+
