@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import {breakfastReducer, indianReducer, dessertReducer} from "./recipeReducers";
+import {breakfastReducer, indianReducer, dessertReducer, mealTimeReducer} from "./recipeReducers";
 
 const rootReducer = combineReducers({
-    breakfast: breakfastReducer,
+    mealTime: mealTimeReducer,
     indian: indianReducer,
     dessert : dessertReducer
 });

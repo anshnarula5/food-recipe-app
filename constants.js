@@ -1,4 +1,7 @@
-export const pViolet = "#d7dde9"
-export const pOrange = "#fceecb"
-export const pPink = "#f9cedf"
-export const pBlue = "#f9cedf"
+export const pViolet = "#D9D7F1"
+export const pOrange = "#ffee93"
+export const pGreen = "#adf7b6"
+export const pPink = "#ffc09f"
+export const pBlue = "#a0ced9"
+
+

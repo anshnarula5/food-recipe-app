@@ -1,20 +1,26 @@
+import {useNavigation} from "@react-navigation/native";
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { Image, StyleSheet } from "react-native";
+import {TouchableOpacity} from "react-native";
 
-const FoodCard = ({ data }) => {
+const FoodCard = ({data}) => {
+  const navigation = useNavigation();
   return (
-    <Layout style={styles.card} level={"2"}>
-      <Image
-        source={{
-          uri: data.recipe.image,
-        }}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <Text style={styles.text}>{data.recipe.label}</Text>
-      
-    </Layout>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Recipe", { id: data.id })}
+    >
+      <Layout style={styles.card} level={"2"}>
+        <Image
+          source={{
+            uri: data.recipe.image,
+          }}
+          style={styles.image}
+          resizeMode="cover"
+        />
+        <Text style={styles.text}>{data.recipe.label}</Text>
+      </Layout>
+    </TouchableOpacity>
   );
 };
 
