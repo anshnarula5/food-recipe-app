@@ -1,25 +1,27 @@
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { Image, StyleSheet } from "react-native";
-import {TouchableOpacity} from "react-native";
+import { TouchableOpacity } from "react-native";
+import { SharedElement } from "react-navigation-shared-element";
 
-const FoodCard = ({data}) => {
+const FoodCard = ({ data }) => {
   const navigation = useNavigation();
+  const recipe = data.recipe;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Recipe", { id: data.id })}
+      onPress={() => navigation.navigate("Recipe", { recipe: recipe })} style={styles.card} 
     >
-      <Layout style={styles.card} level={"2"}>
-        <Image
-          source={{
-            uri: data.recipe.image,
-          }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-        <Text style={styles.text}>{data.recipe.label}</Text>
-      </Layout>
+        <SharedElement id={recipe.label}>
+          <Image
+            source={{
+              uri: recipe.images.LARGE?.url || recipe.image,
+            }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </SharedElement>
+        <Text style={styles.text}>{recipe.label}</Text>
     </TouchableOpacity>
   );
 };

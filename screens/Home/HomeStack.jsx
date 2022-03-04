@@ -9,8 +9,11 @@ const HomeStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="Home"
+      
       screenOptions={{
-        detachPreviousScreen: false,
+        detachPreviousScreen: true,
+        headerShown: false,
+        presentation : "modal"
       }}
     >
       <Stack.Screen
@@ -25,6 +28,9 @@ const HomeStack = () => {
         component={Recipe}
         options={{
           title: "Recipe",
+        }}
+        sharedElements={(route) => {
+          return [route.params.recipe.label];
         }}
       />
     </Stack.Navigator>

@@ -18,6 +18,7 @@ export default function App() {
         backgroundColor={"white"}
       />
       <NavigationContainer
+        
         theme={{ dark: true, colors: { background: "white" } }}
       >
         <ApplicationProvider {...eva} theme={eva.light}>
