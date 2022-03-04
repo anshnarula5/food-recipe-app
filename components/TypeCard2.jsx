@@ -17,7 +17,7 @@ export default TypeCard2;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 10,
+    borderRadius: 20,
     marginRight: 10,
     marginBottom: 10,
     display: "flex",
