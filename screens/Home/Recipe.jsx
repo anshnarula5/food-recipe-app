@@ -1,5 +1,5 @@
-import { Text, Layout } from "@ui-kitten/components";
-import React, { useEffect, useRef } from "react";
+import { Text, Layout, ListItem, Divider, List } from "@ui-kitten/components";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, View, StyleSheet, Image, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
@@ -9,6 +9,7 @@ import { FontAwesome } from "react-native-vector-icons";
 import * as Progress from "react-native-progress";
 import {
   capitalize,
+  darkGreen,
   pBlue,
   pGreen,
   pPink,
@@ -16,15 +17,23 @@ import {
   pSky,
   pViolet,
 } from "../../constants";
+import Collapsible from "react-native-collapsible";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Recipe = ({ route, navigation }) => {
+  const [collapse, setCollapse] = useState(false);
   const { recipe } = route.params;
   const nuts = Object.values(recipe.totalDaily);
-  const filteredNuts = nuts.slice(0, 7);
+  const totalCal = nuts.reduce((prev, i) => prev + i.quantity, 0);
+  nuts.map((n) => (n.quantity = n.quantity / totalCal));
+  nuts.sort((a, b) => b.quantity - a.quantity);
+  const filteredNuts = nuts.slice(0, nuts.length / 3);
+  const remNuts = nuts.slice(nuts.length / 3, nuts.length);
+  const remCal = remNuts.reduce((prev, i) => prev + i.quantity, 0);
+
   const safeInsets = useSafeAreaInsets();
   const opacity = useRef(new Animated.Value(0)).current;
   useEffect(() => {
-    console.log(nuts);
     Animated.timing(opacity, {
       toValue: 1,
       duration: 200,
@@ -32,6 +41,41 @@ const Recipe = ({ route, navigation }) => {
       useNativeDriver: true,
     }).start();
   }, []);
+
+  const renderItem = ({ item, index }) => (
+    <Layout
+      style={{
+        paddingVertical: 10,
+      }}
+    >
+      <Layout
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          alignItems: "center",
+          paddingBottom: 6,
+        }}
+      >
+        <Text category={"s1"} style={{}}>
+          {item.label}
+        </Text>
+        <Text category={"s1"} style={{}}>
+          {(item.quantity * 100).toFixed(2)} %
+        </Text>
+      </Layout>
+
+      <Progress.Bar
+        progress={item.quantity}
+        borderWidth={0}
+        height={7}
+        width={350}
+        animated={false}
+        borderRadius={6}
+        unfilledColor={"#e0e0e0"}
+      />
+    </Layout>
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -85,29 +129,65 @@ const Recipe = ({ route, navigation }) => {
           </Layout>
           <Layout style={{ backgroundColor: pPink, ...styles.card }}>
             <FontAwesome name="heartbeat" size={30} />
-            <Text style={styles.text}>{recipe.healthLabels[0]}</Text>
+            <Text style={styles.text}>
+              {recipe.dietLabels[0] || recipe.healthLabels[0]}
+            </Text>
           </Layout>
         </Layout>
-        <Text
-          category={"h3"}
-          style={{ fontWeight: "200", paddingVertical: 10 }}
+        <Layout
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
-          Nutrition
-        </Text>
-        <Layout>
-          {filteredNuts.map((f) => (
-            <Layout>
-              <Text>{f.label}</Text>
-              <Progress.Bar
-                progress={Math.random()}
-                width={300}
-                borderWidth={0.6}
-                height={10}
-                animated={false}
-              />
-            </Layout>
-          ))}
+          <Text
+            category={"h3"}
+            style={{ fontWeight: "200", paddingVertical: 10 }}
+          >
+            Nutrition Info
+          </Text>
+          <TouchableOpacity onPress={() => setCollapse((prev) => !prev)}>
+            <Text>View info</Text>
+          </TouchableOpacity>
         </Layout>
+        {!collapse && (
+          <Layout>
+            <List
+              style={styles.nutContainer}
+              data={filteredNuts}
+              renderItem={renderItem}
+            />
+            <Layout
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                alignItems: "center",
+                paddingTop: 10,
+                paddingBottom: 6,
+              }}
+            >
+              <Text category={"s1"} style={{}}>
+                Others
+              </Text>
+              <Text category={"s1"} style={{}}>
+                {(remCal * 100).toFixed(2)} %
+              </Text>
+            </Layout>
+
+            <Progress.Bar
+              progress={remCal}
+              borderWidth={0}
+              height={7}
+              width={350}
+              animated={false}
+              borderRadius={6}
+              unfilledColor={"#e0e0e0"}
+            />
+          </Layout>
+        )}
       </Layout>
     </ScrollView>
   );
@@ -135,8 +215,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-    paddingVertical: 15,
-    minWidth: 100,
+    paddingVertical: 12,
+    width: 100,
   },
   text: {
     fontSize: 17,
@@ -147,5 +227,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 15,
     justifyContent: "space-evenly",
+  },
+  nutrition: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
