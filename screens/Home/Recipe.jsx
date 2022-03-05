@@ -1,6 +1,6 @@
 import { Text, Layout, ListItem, Divider, List } from "@ui-kitten/components";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, View, StyleSheet, Image, ScrollView } from "react-native";
+import { Animated, View, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -17,8 +17,6 @@ import {
   pSky,
   pViolet,
 } from "../../constants";
-import Collapsible from "react-native-collapsible";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Recipe = ({ route, navigation }) => {
   const [collapse, setCollapse] = useState(false);

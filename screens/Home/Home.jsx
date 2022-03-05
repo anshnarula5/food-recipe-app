@@ -4,6 +4,7 @@ import { FlatList, ScrollView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import FoodCard from "../../components/FoodCard";
+import RowLoader from "../../components/loaders/RowLoader";
 import TypeCard from "../../components/TypeCard";
 import TypeCard2 from "../../components/TypeCard2";
 import { pBlue, pGreen, pOrange, pPink, pViolet } from "../../constants";
@@ -38,16 +39,16 @@ const Home = () => {
         Cuisines
       </Text>
       <Layout style={styles.box}>
-        <TypeCard2 text={"Chinese"} color={pGreen}  icon="taco"/>
-        <TypeCard2 text={"Italian"} color={pViolet} icon="taco" />
-        <TypeCard2 text={"Mexican"} color={pBlue}  icon="taco"/>
+        <TypeCard2 text={"Chinese"} color={pGreen}  icon={1}/>
+        <TypeCard2 text={"Italian"} color={pViolet} icon={2} />
+        <TypeCard2 text={"Mexican"} color={pBlue}  icon={3}/>
       </Layout>
       <Text category={"h1"} style={styles.header}>
         {meal[0].toUpperCase() + meal.split(meal[0])[1]}
       </Text>
       <Layout style={styles.hContainer}>
         {bLoading ? (
-          <Text>loading</Text>
+          <RowLoader />
         ) : (
           <FlatList
             horizontal={true}
@@ -60,7 +61,7 @@ const Home = () => {
       <Text category={"h2"} style={styles.header}>
         Healthy food
       </Text>
-      <Layout style={styles.box}>
+      <Layout style={styles.box2}>
         <TypeCard text={"Vegan"} color={pGreen} />
         <TypeCard text={"Gluten-free"} color={pViolet} />
         <TypeCard text={"High Protien"} color={pBlue} />
@@ -73,7 +74,7 @@ const Home = () => {
       </Text>
       <Layout style={styles.hContainer}>
         {iLoading ? (
-          <Text>loading</Text>
+            <RowLoader />
         ) : (
           <FlatList
             horizontal={true}
@@ -88,7 +89,7 @@ const Home = () => {
       </Text>
       <Layout style={styles.hContainer}>
         {dLoading ? (
-          <Text>loading</Text>
+             <RowLoader />
         ) : (
           <FlatList
             horizontal={true}
@@ -118,6 +119,11 @@ const styles = StyleSheet.create({
   box: {
     display: "flex",
     flexDirection: "row",
-    flexWrap: "wrap",
+    justifyContent : "space-between"
+  },
+  box2: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap : "wrap"
   },
 });

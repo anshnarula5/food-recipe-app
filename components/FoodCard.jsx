@@ -4,24 +4,25 @@ import React, { useEffect } from "react";
 import { Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
+import ProgressiveImage from "./ProgressiveImage";
 
 const FoodCard = ({ data }) => {
   const navigation = useNavigation();
   const recipe = data.recipe;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Recipe", { recipe: recipe })} style={styles.card} 
+      onPress={() => navigation.navigate("Recipe", { recipe: recipe })}
+      style={styles.card}
     >
-        <SharedElement id={recipe.label}>
-          <Image
-            source={{
-              uri: recipe.images.LARGE?.url || recipe.image,
-            }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </SharedElement>
-        <Text style={styles.text}>{recipe.label}</Text>
+      <SharedElement id={recipe.label}>
+        <ProgressiveImage
+          source={recipe.images.LARGE?.url}
+          defaultImageSource="https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png"
+          style={styles.image}
+          resizeMode="cover"
+        />
+      </SharedElement>
+      <Text style={styles.text}>{recipe.label}</Text>
     </TouchableOpacity>
   );
 };

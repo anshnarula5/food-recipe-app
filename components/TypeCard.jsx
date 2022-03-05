@@ -1,13 +1,13 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { pPink, pViolet } from "../constants";
 
 const TypeCard = ({ text, color }) => {
   return (
-    <Layout style={{ backgroundColor: color, ...styles.card }}>
+    <TouchableOpacity style={{ backgroundColor: color, ...styles.card }}>
       <Text style={styles.text}>{text}</Text>
-    </Layout>
+    </TouchableOpacity>
   );
 };
 

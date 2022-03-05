@@ -1,15 +1,21 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
-import { Image, StyleSheet } from "react-native";
-const TypeCard2 = ({text, color, icon}) => {
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
+const TypeCard2 = ({ text, color, icon }) => {
   return (
-    <Layout style={{ backgroundColor: color, ...styles.card }}>
+    <TouchableOpacity style={{ backgroundColor: color, ...styles.card }}>
       <Image
-        source={require(`../assets/icons/taco.png`)}
+        source={
+          icon === 1
+            ? require(`../assets/icons/noodles.png`)
+            : icon === 2
+            ? require(`../assets/icons/pizza.png`)
+            : icon === 3 && require(`../assets/icons/taco.png`)
+        }
         resizeMode="cover"
       />
       <Text style={styles.text}>{text}</Text>
-    </Layout>
+    </TouchableOpacity>
   );
 };
 
@@ -18,18 +24,15 @@ export default TypeCard2;
 const styles = StyleSheet.create({
   card: {
     borderRadius: 20,
-    marginRight: 10,
-    marginBottom: 10,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
     paddingVertical: 15,
-    width: 100
+    width: 105,
   },
   text: {
     fontSize: 17,
-    paddingVertical: 7,
+    paddingVertical:8,
   },
   sub: {
     paddingTop: 6,
