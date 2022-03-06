@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet } from "react-native";
@@ -21,7 +22,7 @@ const Home = () => {
   );
   const { loading: iLoading, indian } = useSelector((state) => state.indian);
   const { loading: dLoading, dessert } = useSelector((state) => state.dessert);
-
+  const navigator = useNavigation();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchMealTime(meal));
@@ -39,12 +40,39 @@ const Home = () => {
         Cuisines
       </Text>
       <Layout style={styles.box}>
-        <TypeCard2 text={"Chinese"} color={pGreen}  icon={1}/>
-        <TypeCard2 text={"Italian"} color={pViolet} icon={2} />
-        <TypeCard2 text={"Mexican"} color={pBlue}  icon={3}/>
+        <TypeCard2
+          text={"Chinese"}
+          color={pGreen}
+          icon={1}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&cuisineType=chinese&imageSize=LARGE&random=true",
+            })
+          }
+        />
+        <TypeCard2
+          text={"Italian"}
+          color={pViolet}
+          icon={2}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&cuisineType=italian&imageSize=LARGE&random=true",
+            })
+          }
+        />
+        <TypeCard2
+          text={"Mexican"}
+          color={pBlue}
+          icon={3}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&cuisineType=mexican&imageSize=LARGE&random=true",
+            })
+          }
+        />
       </Layout>
-      <Text category={"h1"} style={styles.header}>
-        {meal[0].toUpperCase() + meal.split(meal[0])[1]}
+      <Text category={"h2"} style={styles.header}>
+        {meal[0].toUpperCase() + meal.split(meal[0])[1]} Time
       </Text>
       <Layout style={styles.hContainer}>
         {bLoading ? (
@@ -68,13 +96,12 @@ const Home = () => {
         <TypeCard text={"Low Sugar"} color={pPink} />
       </Layout>
 
-     
       <Text category={"h1"} style={styles.header}>
         Indian
       </Text>
       <Layout style={styles.hContainer}>
         {iLoading ? (
-            <RowLoader />
+          <RowLoader />
         ) : (
           <FlatList
             horizontal={true}
@@ -89,7 +116,7 @@ const Home = () => {
       </Text>
       <Layout style={styles.hContainer}>
         {dLoading ? (
-             <RowLoader />
+          <RowLoader />
         ) : (
           <FlatList
             horizontal={true}
@@ -119,11 +146,11 @@ const styles = StyleSheet.create({
   box: {
     display: "flex",
     flexDirection: "row",
-    justifyContent : "space-between"
+    justifyContent: "space-between",
   },
   box2: {
     display: "flex",
     flexDirection: "row",
-    flexWrap : "wrap"
+    flexWrap: "wrap",
   },
 });

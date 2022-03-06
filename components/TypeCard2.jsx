@@ -1,9 +1,9 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-const TypeCard2 = ({ text, color, icon }) => {
+const TypeCard2 = ({ text, color, icon, handlePress }) => {
   return (
-    <TouchableOpacity style={{ backgroundColor: color, ...styles.card }}>
+    <TouchableOpacity style={{ backgroundColor: color, ...styles.card }} onPress={() => handlePress()}>
       <Image
         source={
           icon === 1

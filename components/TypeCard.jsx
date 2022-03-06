@@ -5,7 +5,7 @@ import { pPink, pViolet } from "../constants";
 
 const TypeCard = ({ text, color }) => {
   return (
-    <TouchableOpacity style={{ backgroundColor: color, ...styles.card }}>
+    <TouchableOpacity style={{ backgroundColor: color, ...styles.card }} >
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );

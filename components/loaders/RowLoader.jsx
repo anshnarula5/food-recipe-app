@@ -16,14 +16,14 @@ const RowLoader = () => {
         {
           key: "someId",
           width: 180,
-          height: 180,
+          height: 180 ,
           marginRight: 10,
           borderRadius : 6
         },
         {
           key: "someOtherId",
           width: 180,
-          height: 180,
+          height: 180 ,
           borderRadius : 6
         },
       ]}
