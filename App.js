@@ -2,7 +2,7 @@ import { ApplicationProvider, Layout, Text } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Home from "./screens/Home/Home";
 import HomeStack from "./screens/Home/HomeStack";
 import { Provider } from "react-redux";
@@ -19,12 +19,12 @@ export default function App() {
       />
       <NavigationContainer
         
-        theme={{ dark: true, colors: { background: "white" } }}
+        theme={{ dark: true, colors: { background: "#f3f3f3" } }}
       >
-        <ApplicationProvider {...eva} theme={eva.light}>
-          <Layout style={styles.container}>
+        <ApplicationProvider {...eva} theme={eva.light} >
+          <View style={styles.container}>
             <Tabs />
-          </Layout>
+          </View>
         </ApplicationProvider>
       </NavigationContainer>
     </Provider>

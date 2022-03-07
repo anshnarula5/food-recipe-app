@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { View } from "react-native";
 import {
   createBottomTabNavigator,
   BottomTabBar,
@@ -10,7 +11,6 @@ const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   return (
-    <>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
@@ -24,13 +24,8 @@ const Tabs = () => {
         }}
         // tabBar={(props) => <MyTabBar {...props} />}
       >
-        <Tab.Screen
-          name="Home"
-          component={HomeStack}
-        />
-        
+        <Tab.Screen name="Home" component={HomeStack} />
       </Tab.Navigator>
-    </>
   );
 };
 

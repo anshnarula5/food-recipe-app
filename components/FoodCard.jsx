@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Layout, Text } from "@ui-kitten/components";
+import { View, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { Image, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native";
@@ -13,6 +13,7 @@ const FoodCard = ({ data }) => {
     <TouchableOpacity
       onPress={() => navigation.navigate("Recipe", { recipe: recipe })}
       style={styles.card}
+      
     >
       <SharedElement id={recipe.label}>
         <ProgressiveImage
@@ -34,6 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 10,
     width: 180,
+    paddingBottom : 5
   },
   image: {
     justifyContent: "center",
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 10,
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
   },
   sub: {

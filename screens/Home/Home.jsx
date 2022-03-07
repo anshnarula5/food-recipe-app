@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import { Layout, Text } from "@ui-kitten/components";
+import { Text } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import FoodCard from "../../components/FoodCard";
@@ -39,7 +39,7 @@ const Home = () => {
       <Text category={"h2"} style={styles.header}>
         Cuisines
       </Text>
-      <Layout style={styles.box}>
+      <View style={styles.box}>
         <TypeCard2
           text={"Chinese"}
           color={pGreen}
@@ -70,11 +70,11 @@ const Home = () => {
             })
           }
         />
-      </Layout>
+      </View>
       <Text category={"h2"} style={styles.header}>
         {meal[0].toUpperCase() + meal.split(meal[0])[1]} Time
       </Text>
-      <Layout style={styles.hContainer}>
+      <View style={styles.hContainer}>
         {bLoading ? (
           <RowLoader />
         ) : (
@@ -85,21 +85,53 @@ const Home = () => {
             keyExtractor={(item) => item.uri}
           />
         )}
-      </Layout>
+      </View>
       <Text category={"h2"} style={styles.header}>
         Healthy food
       </Text>
-      <Layout style={styles.box2}>
-        <TypeCard text={"Vegan"} color={pGreen} />
-        <TypeCard text={"Gluten-free"} color={pViolet} />
-        <TypeCard text={"High Protien"} color={pBlue} />
-        <TypeCard text={"Low Sugar"} color={pPink} />
-      </Layout>
+      <View style={styles.box2}>
+        <TypeCard
+          text={"Vegan"}
+          color={pGreen}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&health=vegan&imageSize=LARGE&random=true",
+            })
+          }
+        />
+        <TypeCard
+          text={"Gluten-free"}
+          color={pViolet}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&health=gluten-free&imageSize=LARGE&random=true",
+            })
+          }
+        />
+        <TypeCard
+          text={"High Protien"}
+          color={pBlue}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&diet=high-protien&imageSize=LARGE&random=true",
+            })
+          }
+        />
+        <TypeCard
+          text={"Low Sugar"}
+          color={pPink}
+          handlePress={() =>
+            navigator.navigate("List", {
+              url: "https://api.edamam.com/api/recipes/v2?type=public&q=&app_id=53f9c771&app_key=4fcebc5db45c3a7aac2e1b746c3052fe&health=sugar-conscious&imageSize=LARGE&random=true",
+            })
+          }
+        />
+      </View>
 
       <Text category={"h1"} style={styles.header}>
         Indian
       </Text>
-      <Layout style={styles.hContainer}>
+      <View style={styles.hContainer}>
         {iLoading ? (
           <RowLoader />
         ) : (
@@ -110,11 +142,11 @@ const Home = () => {
             keyExtractor={(item) => item.uri}
           />
         )}
-      </Layout>
+      </View>
       <Text category={"h1"} style={styles.header}>
         Dessert
       </Text>
-      <Layout style={styles.hContainer}>
+      <View style={styles.hContainer}>
         {dLoading ? (
           <RowLoader />
         ) : (
@@ -125,7 +157,7 @@ const Home = () => {
             keyExtractor={(item) => item.uri}
           />
         )}
-      </Layout>
+      </View>
     </ScrollView>
   );
 };
@@ -135,13 +167,16 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
+    backgroundColor: "#f3f3f3",
   },
 
   hContainer: {
     paddingVertical: 10,
   },
   header: {
-    paddingVertical: 15,
+    paddingVertical: 20,
+    fontWeight: "bold",
+    fontSize : 25
   },
   box: {
     display: "flex",

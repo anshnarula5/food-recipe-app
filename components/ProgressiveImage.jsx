@@ -1,4 +1,3 @@
-import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { View, StyleSheet, Animated } from "react-native";
 
@@ -21,7 +20,7 @@ function ProgressiveImage({ defaultImageSource, source, style, ...props }) {
   };
 
   return (
-    <Layout style={styles.container}>
+    <View style={styles.container}>
       <Animated.Image
         {...props}
         source={{
@@ -37,7 +36,7 @@ function ProgressiveImage({ defaultImageSource, source, style, ...props }) {
         style={[style, { opacity: imageAnimated }, styles.imageOverlay]}
         onLoad={handleImageLoad}
       />
-    </Layout>
+    </View>
   );
 }
 

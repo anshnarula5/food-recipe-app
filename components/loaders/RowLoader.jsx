@@ -12,7 +12,7 @@ const RowLoader = () => {
       boneColor="#cccccc"
       highlightColor="#dbdbdb"
       animationType="pulse"
-      layout={[
+      View={[
         {
           key: "someId",
           width: 180,

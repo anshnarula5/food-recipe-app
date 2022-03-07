@@ -1,4 +1,4 @@
-import { Layout, Text } from "@ui-kitten/components";
+import { View, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 const TypeCard2 = ({ text, color, icon, handlePress }) => {
@@ -28,10 +28,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 15,
-    width: 105,
+    width: 100,
+    elevation: 5,
+    marginHorizontal : 10
   },
   text: {
-    fontSize: 17,
+    fontSize: 15,
     paddingVertical:8,
   },
   sub: {

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import { Layout, Text } from "@ui-kitten/components";
-import { StyleSheet, FlatList } from "react-native";
+import { Text } from "@ui-kitten/components";
+import { StyleSheet, FlatList, View } from "react-native";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FoodCard from "./FoodCard";
@@ -23,20 +23,20 @@ const List = ({ route }) => {
   };
 
   return (
-    <Layout style={styles.container}>
+    <View style={styles.container}>
       {foods.length === 0 ? (
         <Text>Loading</Text>
       ) : (
-        <Layout >
+        <View>
           <FlatList
             data={foods}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             numColumns={2}
           />
-        </Layout>
+        </View>
       )}
-    </Layout>
+    </View>
   );
 };
 
@@ -47,9 +47,10 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    },
-    container: {
-        paddingHorizontal: 10,
-        paddingTop : 10
-    }
+  },
+  container: {
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    backgroundColor : "#f3f3f3"
+  },
 });

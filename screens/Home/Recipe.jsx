@@ -1,6 +1,14 @@
-import { Text, Layout, ListItem, Divider, List } from "@ui-kitten/components";
+import { Text, ListItem, Divider, List } from "@ui-kitten/components";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, View, StyleSheet, Image, ScrollView, TouchableOpacity } from "react-native";
+import { FlatList } from "react-native";
+import {
+  Animated,
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -41,12 +49,12 @@ const Recipe = ({ route, navigation }) => {
   }, []);
 
   const renderItem = ({ item, index }) => (
-    <Layout
+    <View
       style={{
         paddingVertical: 10,
       }}
     >
-      <Layout
+      <View
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -61,7 +69,7 @@ const Recipe = ({ route, navigation }) => {
         <Text category={"s1"} style={{}}>
           {(item.quantity * 100).toFixed(2)} %
         </Text>
-      </Layout>
+      </View>
 
       <Progress.Bar
         progress={item.quantity}
@@ -71,9 +79,35 @@ const Recipe = ({ route, navigation }) => {
         animated={false}
         borderRadius={6}
         unfilledColor={"#e0e0e0"}
+        color="#FE724C"
       />
-    </Layout>
+    </View>
   );
+
+  const Ingredient = ({ data }) => {
+    return (
+      <View
+        style={{
+          paddingVertical: 10,
+          backgroundColor: "white",
+          marginBottom: 10,
+          paddingHorizontal: 10,
+          elevation: 1,
+          borderRadius: 15,
+          display: "flex",
+          flexDirection: "row",
+          alignItems : "center"
+        }}
+      >
+        <Image
+          source={{ uri: data.image }}
+          style={styles.ingImage}
+          resizeMode="contain"
+        />
+        <Text style={{ fontWeight: "bold", fontSize: 16, paddingHorizontal :15 }}>{data.text}</Text>
+      </View>
+    );
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -99,7 +133,7 @@ const Recipe = ({ route, navigation }) => {
           resizeMode="cover"
         />
       </SharedElement>
-      <Layout style={styles.recipe}>
+      <View style={styles.recipe}>
         <Text style={{ color: pBlue, fontSize: 20 }}>
           {capitalize(recipe.mealType[0])}
         </Text>
@@ -109,30 +143,30 @@ const Recipe = ({ route, navigation }) => {
         >
           {recipe.label}
         </Text>
-        <Layout style={styles.cards}>
-          <Layout style={{ backgroundColor: pPurple, ...styles.card }}>
+        <View style={styles.cards}>
+          <View style={{ backgroundColor: pPurple, ...styles.card }}>
             <Icon name="clockcircleo" size={30} />
             <View style={{ alignItems: "center", paddingTop: 7 }}>
               <Text>{5 + Math.floor(Math.random() * 30)} </Text>
               <Text>min</Text>
             </View>
-          </Layout>
-          <Layout style={{ backgroundColor: pSky, ...styles.card }}>
+          </View>
+          <View style={{ backgroundColor: pSky, ...styles.card }}>
             <SimpleLineIcons name="fire" size={30} />
             <View style={{ alignItems: "center", paddingTop: 7 }}>
               <Text>{recipe.calories.toFixed(2)}</Text>
 
               <Text>Calories</Text>
             </View>
-          </Layout>
-          <Layout style={{ backgroundColor: pPink, ...styles.card }}>
+          </View>
+          <View style={{ backgroundColor: pPink, ...styles.card }}>
             <FontAwesome name="heartbeat" size={30} />
             <Text style={styles.text}>
               {recipe.dietLabels[0] || recipe.healthLabels[0]}
             </Text>
-          </Layout>
-        </Layout>
-        <Layout
+          </View>
+        </View>
+        <View
           style={{
             display: "flex",
             flexDirection: "row",
@@ -149,15 +183,15 @@ const Recipe = ({ route, navigation }) => {
           <TouchableOpacity onPress={() => setCollapse((prev) => !prev)}>
             <Text>View info</Text>
           </TouchableOpacity>
-        </Layout>
+        </View>
         {!collapse && (
-          <Layout>
+          <View>
             <List
-              style={styles.nutContainer}
+              style={{ backgroundColor: "#f3f3f3" }}
               data={filteredNuts}
               renderItem={renderItem}
             />
-            <Layout
+            <View
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -173,7 +207,7 @@ const Recipe = ({ route, navigation }) => {
               <Text category={"s1"} style={{}}>
                 {(remCal * 100).toFixed(2)} %
               </Text>
-            </Layout>
+            </View>
 
             <Progress.Bar
               progress={remCal}
@@ -183,10 +217,24 @@ const Recipe = ({ route, navigation }) => {
               animated={false}
               borderRadius={6}
               unfilledColor={"#e0e0e0"}
+              color="#FE724C"
             />
-          </Layout>
+          </View>
         )}
-      </Layout>
+        <View>
+          <Text
+            category={"h3"}
+            style={{ fontWeight: "200", paddingVertical: 20 }}
+          >
+            Ingredients
+          </Text>
+          <FlatList
+            data={recipe.ingredients}
+            renderItem={({ item }) => <Ingredient data={item} />}
+            keyExtractor={(item) => item.uri}
+          />
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -200,6 +248,11 @@ const styles = StyleSheet.create({
   postImage: {
     height: 300,
     width: "100%",
+  },
+  ingImage: {
+    height: 60,
+    width: 60,
+    borderRadius : 15
   },
   recipe: {
     padding: 10,
