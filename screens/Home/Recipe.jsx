@@ -1,6 +1,6 @@
 import { Text, ListItem, Divider, List } from "@ui-kitten/components";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Linking } from "react-native";
 import {
   Animated,
   View,
@@ -25,7 +25,7 @@ import {
   pSky,
   pViolet,
 } from "../../constants";
-
+import { Feather } from "react-native-vector-icons";
 const Recipe = ({ route, navigation }) => {
   const [collapse, setCollapse] = useState(false);
   const { recipe } = route.params;
@@ -48,42 +48,43 @@ const Recipe = ({ route, navigation }) => {
     }).start();
   }, []);
 
-  const renderItem = ({ item, index }) => (
-    <View
-      style={{
-        paddingVertical: 10,
-      }}
-    >
+  const RenderItem = ({ item }) => {
+    return (
       <View
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingBottom: 6,
+          paddingVertical: 10,
         }}
       >
-        <Text category={"s1"} style={{}}>
-          {item.label}
-        </Text>
-        <Text category={"s1"} style={{}}>
-          {(item.quantity * 100).toFixed(2)} %
-        </Text>
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 6,
+          }}
+        >
+          <Text category={"s1"} style={{}}>
+            {item.label}
+          </Text>
+          <Text category={"s1"} style={{}}>
+            {(item.quantity * 100).toFixed(2)} %
+          </Text>
+        </View>
+
+        <Progress.Bar
+          progress={item.quantity}
+          borderWidth={0}
+          height={7}
+          width={350}
+          animated={false}
+          borderRadius={6}
+          unfilledColor={"#e0e0e0"}
+          color="#FE724C"
+        />
       </View>
-
-      <Progress.Bar
-        progress={item.quantity}
-        borderWidth={0}
-        height={7}
-        width={350}
-        animated={false}
-        borderRadius={6}
-        unfilledColor={"#e0e0e0"}
-        color="#FE724C"
-      />
-    </View>
-  );
-
+    );
+  };
   const Ingredient = ({ data }) => {
     return (
       <View
@@ -91,12 +92,13 @@ const Recipe = ({ route, navigation }) => {
           paddingVertical: 10,
           backgroundColor: "white",
           marginBottom: 10,
+          marginHorizontal: 5,
           paddingHorizontal: 10,
-          elevation: 1,
+          elevation: 5,
           borderRadius: 15,
           display: "flex",
           flexDirection: "row",
-          alignItems : "center"
+          alignItems: "center",
         }}
       >
         <Image
@@ -104,7 +106,11 @@ const Recipe = ({ route, navigation }) => {
           style={styles.ingImage}
           resizeMode="contain"
         />
-        <Text style={{ fontWeight: "bold", fontSize: 16, paddingHorizontal :15 }}>{data.text}</Text>
+        <Text
+          style={{ fontWeight: "bold", fontSize: 16, paddingHorizontal: 15 }}
+        >
+          {data.text}
+        </Text>
       </View>
     );
   };
@@ -166,6 +172,31 @@ const Recipe = ({ route, navigation }) => {
             </Text>
           </View>
         </View>
+
+        <View>
+          <Text
+            category={"h3"}
+            style={{ fontWeight: "200", paddingVertical: 20 }}
+          >
+            Ingredients
+          </Text>
+          <FlatList
+            data={recipe.ingredients}
+            renderItem={({ item }) => <Ingredient data={item} />}
+            keyExtractor={(item) => item.uri}
+          />
+        </View>
+        <Text
+          category={"h3"}
+          style={{
+            fontWeight: "200",
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+          }}
+          onPress={() => Linking.openURL(recipe.url)}
+        >
+          Instructions <Feather name="external-link" size={25} />
+        </Text>
         <View
           style={{
             display: "flex",
@@ -176,7 +207,7 @@ const Recipe = ({ route, navigation }) => {
         >
           <Text
             category={"h3"}
-            style={{ fontWeight: "200", paddingVertical: 10 }}
+            style={{ fontWeight: "200", paddingVertical: 15}}
           >
             Nutrition Info
           </Text>
@@ -185,11 +216,21 @@ const Recipe = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
         {!collapse && (
-          <View>
-            <List
-              style={{ backgroundColor: "#f3f3f3" }}
+          <View
+            style={{
+              backgroundColor: "white",
+              padding: 10,
+              borderRadius: 15,
+              elevation: 10,
+              paddingHorizontal: 15,
+              paddingBottom: 20,
+            }}
+          >
+            <FlatList
+              style={{ backgroundColor: "white" }}
               data={filteredNuts}
-              renderItem={renderItem}
+              renderItem={({ item }) => <RenderItem item={item} />}
+              keyExtractor={(item) => item.uri}
             />
             <View
               style={{
@@ -213,7 +254,7 @@ const Recipe = ({ route, navigation }) => {
               progress={remCal}
               borderWidth={0}
               height={7}
-              width={350}
+              width={325}
               animated={false}
               borderRadius={6}
               unfilledColor={"#e0e0e0"}
@@ -221,19 +262,6 @@ const Recipe = ({ route, navigation }) => {
             />
           </View>
         )}
-        <View>
-          <Text
-            category={"h3"}
-            style={{ fontWeight: "200", paddingVertical: 20 }}
-          >
-            Ingredients
-          </Text>
-          <FlatList
-            data={recipe.ingredients}
-            renderItem={({ item }) => <Ingredient data={item} />}
-            keyExtractor={(item) => item.uri}
-          />
-        </View>
       </View>
     </ScrollView>
   );
@@ -252,7 +280,7 @@ const styles = StyleSheet.create({
   ingImage: {
     height: 60,
     width: 60,
-    borderRadius : 15
+    borderRadius: 15,
   },
   recipe: {
     padding: 10,
@@ -268,6 +296,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingVertical: 12,
     width: 100,
+    elevation: 10,
   },
   text: {
     fontSize: 17,

@@ -10,7 +10,7 @@ const Stack = createSharedElementStackNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Recipes"
       
       screenOptions={{
         detachPreviousScreen: true,
