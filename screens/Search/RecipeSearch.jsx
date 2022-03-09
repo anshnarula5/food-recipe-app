@@ -26,7 +26,8 @@ import {
 } from "../../constants";
 import { Feather } from "react-native-vector-icons";
 import Nutrition from "../../components/Nutrition";
-const Recipe = ({ route, navigation }) => {
+
+const RecipeSearch = ({ route, navigation }) => {
   const { recipe } = route.params;
   const nuts = Object.values(recipe.totalDaily);
   const totalCal = nuts.reduce((prev, i) => prev + i.quantity, 0);
@@ -172,7 +173,8 @@ const Recipe = ({ route, navigation }) => {
   );
 };
 
-export default Recipe;
+
+export default RecipeSearch;
 
 const styles = StyleSheet.create({
   container: {

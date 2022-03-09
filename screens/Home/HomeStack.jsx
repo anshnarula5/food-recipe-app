@@ -3,6 +3,7 @@ import {CardStyleInterpolators} from "@react-navigation/stack";
 import React from "react";
 import {createSharedElementStackNavigator} from "react-navigation-shared-element";
 import List from "../../components/List";
+import TitleList from "../../components/TitleList";
 import Home from "./Home";
 import Recipe from "./Recipe";
 const Stack = createSharedElementStackNavigator();
@@ -42,6 +43,14 @@ const HomeStack = () => {
         component={List}
         options={{
           title: "List",
+        }}
+       
+      />
+      <Stack.Screen
+        name="TitleList"
+        component={TitleList}
+        options={{
+          title: "TitleList",
         }}
        
       />

@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Text } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View, Image } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Cuisines from "../../components/Banners/Cuisines";
@@ -11,7 +11,7 @@ import RowLoader from "../../components/loaders/RowLoader";
 import Row from "../../components/Row";
 import TypeCard from "../../components/TypeCard";
 import TypeCard2 from "../../components/TypeCard2";
-import { pBlue, pGreen, pOrange, pPink, pViolet } from "../../constants";
+import { background, pBlue, pGreen, pink, pOrange, pPink, pViolet } from "../../constants";
 import meal from "../../helpers/getTime";
 import {
   fetchDessert,
@@ -31,30 +31,42 @@ const Home = () => {
     dispatch(fetchMealTime(meal));
     dispatch(fetchIndian());
     dispatch(fetchDessert());
-    console.log(meal);
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <Text category={"h1"} style={styles.header}>
-        Food tomorrow because today is almost over.
-      </Text>
-      <Cuisines />
-      <Text category={"h2"} style={styles.header}>
-        {meal[0].toUpperCase() + meal.split(meal[0])[1]} Time
-      </Text>
-      {bLoading ? <RowLoader /> : <Row loading={bLoading} foods={mealTime} />}
-     
-      <Text category={"h1"} style={styles.header}>
-        Indian
-      </Text>
-      {iLoading ? <RowLoader /> : <Row foods={indian} />}
-      <Healthy />
-      <Text category={"h1"} style={styles.header}>
-        Dessert
-      </Text>
-      {dLoading ? <RowLoader /> : <Row foods={dessert} />}
-    </ScrollView>
+    <>
+      <ScrollView style={styles.container}>
+        <Image
+          source={require("../../assets/banner.jpg")}
+          style={{ height: 270, width: 400 }}
+          resizeMode="cover"
+        />
+        <View style={{ paddingHorizontal: 15 }}>
+          <Cuisines />
+          <Text category={"h2"} style={styles.header}>
+            {meal[0].toUpperCase() + meal.split(meal[0])[1]} Time
+          </Text>
+          {bLoading ? (
+            <RowLoader />
+          ) : (
+            <Row loading={bLoading} foods={mealTime} />
+          )}
+
+          <Text category={"h1"} style={styles.header}>
+            Indian
+          </Text>
+          {iLoading ? <RowLoader /> : <Row foods={indian} />}
+        </View>
+
+        <Healthy />
+        <View style={{ paddingHorizontal: 15 }}>
+          <Text category={"h1"} style={styles.header}>
+            Dessert
+          </Text>
+          {dLoading ? <RowLoader /> : <Row foods={dessert} />}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
@@ -62,8 +74,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 15,
-    backgroundColor: "#f3f3f3",
+    backgroundColor: background,
   },
 
   hContainer: {
@@ -74,6 +85,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 25,
   },
- 
- 
 });

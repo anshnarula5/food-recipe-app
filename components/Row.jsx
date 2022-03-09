@@ -11,7 +11,7 @@ const Row = ({ foods }) => {
           horizontal={true}
           data={foods}
           renderItem={({ item }) => <FoodCard data={item} />}
-          keyExtractor={(item) => item.uri}
+          keyExtractor={(item) => Math.random()}
         />
     </View>
   );

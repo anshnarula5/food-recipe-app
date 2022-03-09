@@ -8,6 +8,7 @@ import HomeStack from "./screens/Home/HomeStack";
 import { Provider } from "react-redux";
 import store from "./store";
 import Tabs from "./navigation/Tabs";
+import {background} from "./constants";
 
 export default function App() {
   return (
@@ -19,7 +20,7 @@ export default function App() {
       />
       <NavigationContainer
         
-        theme={{ dark: true, colors: { background: "#f3f3f3" } }}
+        theme={{ dark: true, colors: { background: background } }}
       >
         <ApplicationProvider {...eva} theme={eva.light} >
           <View style={styles.container}>

@@ -1,12 +1,19 @@
+import {useNavigation} from "@react-navigation/native";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import { pBlue, pGreen, pPink, pViolet } from "../../constants";
 import TypeCard from "../TypeCard";
 import TypeCard2 from "../TypeCard2";
 
 const Healthy = () => {
+  const navigator = useNavigation()
   return (
-    <>
+    <ImageBackground
+      source={require("../../assets/bg.jpg")}
+      style={{ height: 230, width: 400, paddingHorizontal : 15 }}
+      resizeMode="cover"
+      
+    >
       <Text category={"h2"} style={styles.header}>
         Healthy food
       </Text>
@@ -48,7 +55,7 @@ const Healthy = () => {
           }
         />
       </View>
-    </>
+    </ImageBackground>
   );
 };
 
@@ -64,5 +71,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     fontWeight: "bold",
     fontSize: 25,
+    color: "white"
   },
 });

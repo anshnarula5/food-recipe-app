@@ -1,14 +1,48 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { pBlue, pGreen, pViolet } from "../../constants";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { pBlue, pGreen, pink, pViolet } from "../../constants";
 import TypeCard2 from "../TypeCard2";
 
 const Cuisines = () => {
+  const navigator = useNavigation();
+  const cuisines = [
+    "american",
+    "asian",
+    "british",
+    "caribbean",
+    "chinese",
+    "french",
+    "indian",
+    "italian",
+    "japanese",
+    "kosher",
+    "mediterranean",
+    "mexican",
+    "nordic",
+  ];
   return (
-    <>
-      <Text category={"h2"} style={styles.header}>
-        Cuisines
-      </Text>
+    <View>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+   
+
+        }}
+      >
+        <Text category={"h2"} style={styles.header}>
+          Cuisines
+        </Text>
+        <TouchableOpacity
+          category={"h2"}
+          onPress={() => navigator.navigate("TitleList", { list: cuisines })}
+        >
+          <Text>See more</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.box}>
         <TypeCard2
@@ -42,7 +76,7 @@ const Cuisines = () => {
           }
         />
       </View>
-    </>
+    </View>
   );
 };
 

@@ -75,3 +75,17 @@ export const dessertReducer = (state = { dessert: [] }, action) => {
       return state;
   }
 };
+
+
+
+export const searchReducer = (state = {  foods : [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case "GET_SEARCH_REQUEST":
+      return { loading: true };
+    case "GET_SEARCH_SUCCESS":
+      return { loading: false,  foods : payload.foods };
+    default:
+      return state;
+  }
+};

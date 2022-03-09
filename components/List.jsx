@@ -4,6 +4,8 @@ import { StyleSheet, FlatList, View } from "react-native";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FoodCard from "./FoodCard";
+import ListLoader from "./loaders/ListLoader";
+import {background} from "../constants";
 
 const List = ({ route }) => {
   const navigation = useNavigation();
@@ -25,13 +27,13 @@ const List = ({ route }) => {
   return (
     <View style={styles.container}>
       {foods.length === 0 ? (
-        <Text>Loading</Text>
+        <ListLoader />
       ) : (
         <View>
           <FlatList
             data={foods}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => Math.random()}
             numColumns={2}
           />
         </View>
@@ -51,6 +53,6 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     paddingTop: 10,
-    backgroundColor : "#f3f3f3"
+    backgroundColor : background
   },
 });
