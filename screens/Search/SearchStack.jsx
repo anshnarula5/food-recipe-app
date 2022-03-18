@@ -17,10 +17,10 @@ const SearchStack = () => {
       }}
     >
       <Stack.Screen
-        name="Search"
+        name="Sear"
         component={Search}
         options={{
-          title: "Search",
+          title: "Sear",
         }}
       />
       <Stack.Screen

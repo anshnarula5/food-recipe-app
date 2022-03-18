@@ -25,7 +25,11 @@ import {
   pViolet,
 } from "../../constants";
 import { Feather } from "react-native-vector-icons";
+import Icons from "react-native-vector-icons/FontAwesome";
 import Nutrition from "../../components/Nutrition";
+
+import BottomSheet from 'reanimated-bottom-sheet';
+
 const Recipe = ({ route, navigation }) => {
   const { recipe } = route.params;
   const nuts = Object.values(recipe.totalDaily);
@@ -98,7 +102,7 @@ const Recipe = ({ route, navigation }) => {
           justifyContent: "space-between",
         }}
       >
-        <Text onPress={() => navigation.goBack()}>Go back</Text>
+        <Text onPress={() => navigation.goBack()}>< Icons name = "arrow-left" size = {25} /></Text>
       </Animated.View>
 
       <SharedElement id={recipe.label}>
@@ -141,7 +145,6 @@ const Recipe = ({ route, navigation }) => {
             </Text>
           </View>
         </View>
-
         <View>
           <Text
             category={"h3"}
@@ -152,7 +155,7 @@ const Recipe = ({ route, navigation }) => {
           <FlatList
             data={recipe.ingredients}
             renderItem={({ item }) => <Ingredient data={item} />}
-            keyExtractor={(item) => item.uri}
+            keyExtractor={(item) => Math.random()}
           />
         </View>
         <Text

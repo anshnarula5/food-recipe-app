@@ -22,10 +22,10 @@ const HomeStack = () => {
       }}
     >
       <Stack.Screen
-        name="Home"
+        name="Browse"
         component={Home}
         options={{
-          title: "Home",  
+          title: "Browse",  
         }}
       />
       <Stack.Screen

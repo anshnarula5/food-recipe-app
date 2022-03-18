@@ -61,7 +61,11 @@ const Search = () => {
           )}
         </View>
       ) : (
-        <Text>Search</Text>
+        <Icon
+          name="search1"
+          size={90}
+          style={{ alignSelf : "center", paddingVertical : 100 }}
+        />
       )}
     </View>
   );
